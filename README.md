@@ -24,8 +24,8 @@ Aplikasi web PWA untuk pencatatan penggunaan listrik rumah yang dioptimalkan unt
 
 ### 1. Clone Repository
 ```bash
-git clone <repository-url>
-cd electricity-tracker-pwa
+git clone https://github.com/agoengwibouuo/listrikku.git
+cd listrikku
 ```
 
 ### 2. Install Dependencies
