@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Electricity Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-md w-full">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
+                <!-- App Icon -->
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+
+                <!-- Title -->
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                    Tidak Ada Koneksi
+                </h1>
+                
+                <!-- Description -->
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Aplikasi sedang offline. Periksa koneksi internet Anda dan coba lagi.
+                </p>
+
+                <!-- Offline Icon -->
+                <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-12.728 12.728m0-12.728l12.728 12.728"></path>
+                    </svg>
+                </div>
+
+                <!-- Actions -->
+                <div class="space-y-3">
+                    <button 
+                        onclick="window.location.reload()" 
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-xl font-semibold transition-colors"
+                    >
+                        Coba Lagi
+                    </button>
+                    
+                    <button 
+                        onclick="window.history.back()" 
+                        class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-xl font-semibold transition-colors"
+                    >
+                        Kembali
+                    </button>
+                </div>
+
+                <!-- Offline Features -->
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                        Fitur Offline Tersedia:
+                    </h3>
+                    <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div class="flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Lihat data yang sudah di-cache</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Data akan disinkronkan saat online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if online and redirect
+        function checkOnline() {
+            if (navigator.onLine) {
+                window.location.href = '/';
+            }
+        }
+
+        // Listen for online event
+        window.addEventListener('online', checkOnline);
+        
+        // Check periodically
+        setInterval(checkOnline, 5000);
+
+        // Apply theme from localStorage
+        try {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+            
+            if (shouldBeDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.add('light');
+            }
+        } catch (e) {
+            console.warn('Failed to apply theme:', e);
+        }
+    </script>
+</body>
+</html>
